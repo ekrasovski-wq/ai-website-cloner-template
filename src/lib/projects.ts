@@ -1,15 +1,11 @@
 import type { Project } from "@/types/project";
 
-// Helper: encode filenames that contain spaces / non-ASCII characters so they
-// resolve correctly both in <img> and in three.js TextureLoader fetches.
-const enc = (p: string) => encodeURI(p);
-
 export const projects: Project[] = [
   {
     title: "Brandbook 2026",
     slug: "brandbook-2026",
     year: 2026,
-    thumbnailUrl: "/images/projects/2.png",
+    thumbnailUrl: "/images/projects/brandbook-2026.png",
     dominantBg: "#0a0a0a",
     width: 3970,
     height: 2603,
@@ -18,7 +14,7 @@ export const projects: Project[] = [
     title: "Merrilly Brandbook",
     slug: "merrilly-brandbook",
     year: 2026,
-    thumbnailUrl: enc("/images/projects/merrily brandbook1.jpg"),
+    thumbnailUrl: "/images/projects/merrilly-brandbook.jpg",
     dominantBg: "#fce4ee",
     width: 1920,
     height: 1080,
@@ -27,7 +23,7 @@ export const projects: Project[] = [
     title: "Hostel 13",
     slug: "hostel-13",
     year: 2026,
-    thumbnailUrl: "/images/projects/2245.jpg",
+    thumbnailUrl: "/images/projects/hostel-13.jpg",
     dominantBg: "#3a3a3a",
     width: 1080,
     height: 1080,
@@ -36,7 +32,7 @@ export const projects: Project[] = [
     title: "Marketer",
     slug: "marketer",
     year: 2026,
-    thumbnailUrl: enc("/images/projects/მარკეტერი.jpg"),
+    thumbnailUrl: "/images/projects/marketer.jpg",
     dominantBg: "#101010",
     width: 21770,
     height: 11424,
@@ -45,7 +41,7 @@ export const projects: Project[] = [
     title: "VM 14",
     slug: "vm-14",
     year: 2026,
-    thumbnailUrl: enc("/images/projects/14 ვმ.jpg"),
+    thumbnailUrl: "/images/projects/vm-14.jpg",
     dominantBg: "#1a1a1a",
     width: 8333,
     height: 8333,
