@@ -1,0 +1,12 @@
+[
+  { "title": "Jupiter", "slug": "jupiter", "year": 2026, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/bff6c9518d1b998df04c33101d61ad965fd23a98-1413x760.png", "dominantBg": "#2d3e49", "width": 1413, "height": 760 },
+  { "title": "Mercedes AMG", "slug": "mercedes-amg", "year": 2025, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/f430b963c80253937547780211cd3abe7b23924c-1920x1080.png", "dominantBg": "#f4cc58", "width": 1920, "height": 1080 },
+  { "title": "Thought", "slug": "thought", "year": 2025, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/41a99c4ae85965e19dcc6befe7caaae6c2d54d9c-1146x644.png", "dominantBg": "#352623", "width": 1146, "height": 644 },
+  { "title": "Babylon is burning", "slug": "babylon-is-burning", "year": 2025, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/f5d615bd06485eee711166e82adb7b60bcffa749-1675x928.png", "dominantBg": "#272946", "width": 1675, "height": 928 },
+  { "title": "The disease spread on Tiktok", "slug": "the-disease-spread-on-tiktok", "year": 2024, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/19fa225f5d92c65608e2234c0b0bd1fb2e3d681c-3840x1920.png", "dominantBg": "#5b2f64", "width": 3840, "height": 1920 },
+  { "title": "The purity revealed", "slug": "the-purity-revealed", "year": 2025, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/689cc8437a49fac1ba8f12012d73cf9d20ce46fb-3840x2160.png", "dominantBg": "#3d3446", "width": 3840, "height": 2160 },
+  { "title": "Paths of life", "slug": "paths-of-life", "year": 2024, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/53f8a4a889052e6d9f92fc347533062abaf7c28a-1396x770.png", "dominantBg": "#5e3138", "width": 1396, "height": 770 },
+  { "title": "Ah, Psychedelics", "slug": "ah-psychedelics", "year": 2025, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/1ca122cfaaff3f8b109554a29cc7a1132d13a0c6-1280x717.png", "dominantBg": "#04dcdc", "width": 1280, "height": 717 },
+  { "title": "Digital Travel", "slug": "digital-travel", "year": 2024, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/219c0768c852e48380fd831ed0772f7c173ac0ea-1280x719.png", "dominantBg": "#3350f0", "width": 1280, "height": 719 },
+  { "title": "Chromatik", "slug": "chromatik", "year": 2025, "thumbnailUrl": "https://cdn.sanity.io/images/u7lvkmbp/production/80de59a860bc12ff92d9d349ffe319cfb92a8de8-1258x984.png", "dominantBg": "#0c04fc", "width": 1258, "height": 984 }
+]
