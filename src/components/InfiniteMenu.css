@@ -1,0 +1,48 @@
+.infinite-menu-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#infinite-grid-menu-canvas {
+  cursor: grab;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+}
+
+#infinite-grid-menu-canvas:active {
+  cursor: grabbing;
+}
+
+.face-title {
+  user-select: none;
+  position: absolute;
+  font-weight: 500;
+  font-size: 2.4rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-family: Indivisible, "Helvetica Neue", Arial, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  white-space: nowrap;
+  display: none; /* we render our own tooltip in React */
+}
+
+.face-description {
+  display: none;
+}
+
+.face-title.active {
+  opacity: 1;
+  transition: 0.5s ease;
+}
+.face-title.inactive {
+  opacity: 0;
+  transition: 0.1s ease;
+}
