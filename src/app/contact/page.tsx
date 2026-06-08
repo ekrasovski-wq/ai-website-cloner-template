@@ -54,14 +54,15 @@ export default function ContactPage() {
           href={`mailto:${EMAIL}`}
           onMouseEnter={() => play("hover")}
           onClick={() => play("click")}
-          className="text-white hover:text-white/60 transition-colors break-all pointer-events-auto"
+          className="text-white hover:text-white/60 transition-colors break-words max-w-full pointer-events-auto"
           style={{
             ...fadeUp(1),
             fontFamily: 'Indivisible, "Helvetica Neue", Arial, sans-serif',
             fontWeight: 500,
-            fontSize: "clamp(24px, 4vw, 52px)",
-            lineHeight: 1.05,
+            fontSize: "clamp(20px, 3.4vw, 42px)",
+            lineHeight: 1.1,
             letterSpacing: "-0.02em",
+            overflowWrap: "anywhere",
           }}
         >
           {EMAIL}
