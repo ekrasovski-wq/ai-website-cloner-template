@@ -1,10 +1,12 @@
 "use client";
 import { useRef, useState } from "react";
+import { FileText } from "lucide-react";
 import { MenuButton, MenuPanel } from "@/components/MenuPanel";
 import { TopLogo } from "@/components/TopLogo";
 import { SoundToggle } from "@/components/SoundToggle";
 import VariableProximity from "@/components/VariableProximity";
 import { ToolsCloud } from "@/components/ToolsCloud";
+import { play } from "@/lib/sounds";
 import { useLenis } from "@/lib/useLenis";
 
 export default function AboutPage() {
@@ -42,6 +44,22 @@ export default function AboutPage() {
 
           {/* Tools / platforms I work with — floating badges near the text. */}
           <ToolsCloud />
+
+          {/* Small CV link */}
+          <div className="mt-10 flex justify-center">
+            <a
+              href="/Krasovski-CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={() => play("hover")}
+              onClick={() => play("click")}
+              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[13px] font-medium text-white/70 transition-all duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white"
+              style={{ fontFamily: 'Indivisible, "Helvetica Neue", Arial, sans-serif' }}
+            >
+              <FileText className="w-4 h-4" strokeWidth={2} />
+              View CV
+            </a>
+          </div>
         </div>
       </section>
 
