@@ -1,30 +1,29 @@
 "use client";
-// Floating row of tool/platform badges shown under the About text. Each badge
-// gently bobs in the air (staggered) and lifts on hover. Adobe apps use their
-// official lettermark style; Figma and Claude use their real marks.
+// Floating row of tool/platform badges under the About text. Each badge bobs
+// gently and lifts on hover. Adobe apps use their official lettermark icons;
+// Figma, Claude, Blender, Archicad and 3ds Max (Autodesk) use their real logos.
 
+import type { ReactNode } from "react";
 import { play } from "@/lib/sounds";
 
-type Tool =
-  | { name: string; kind: "text"; label: string; bg: string; fg: string }
-  | { name: string; kind: "figma" | "claude" };
+const SI = {
+  blender: "M12.51 13.214c.046-.8.438-1.506 1.03-2.006a3.424 3.424 0 0 1 2.212-.79c.85 0 1.631.3 2.211.79.592.5.983 1.206 1.028 2.005.045.823-.285 1.586-.865 2.153a3.389 3.389 0 0 1-2.374.938 3.393 3.393 0 0 1-2.376-.938c-.58-.567-.91-1.33-.865-2.152M7.35 14.831c.006.314.106.922.256 1.398a7.372 7.372 0 0 0 1.593 2.757 8.227 8.227 0 0 0 2.787 2.001 8.947 8.947 0 0 0 3.66.76 8.964 8.964 0 0 0 3.657-.772 8.285 8.285 0 0 0 2.785-2.01 7.428 7.428 0 0 0 1.592-2.762 6.964 6.964 0 0 0 .25-3.074 7.123 7.123 0 0 0-1.016-2.779 7.764 7.764 0 0 0-1.852-2.043h.002L13.566 2.55l-.02-.015c-.492-.378-1.319-.376-1.86.002-.547.382-.609 1.015-.123 1.415l-.001.001 3.126 2.543-9.53.01h-.013c-.788.001-1.545.518-1.695 1.172-.154.665.38 1.217 1.2 1.22V8.9l4.83-.01-8.62 6.617-.034.025c-.813.622-1.075 1.658-.563 2.313.52.667 1.625.668 2.447.004L7.414 14s-.069.52-.063.831zm12.09 1.741c-.97.988-2.326 1.548-3.795 1.55-1.47.004-2.827-.552-3.797-1.538a4.51 4.51 0 0 1-1.036-1.622 4.282 4.282 0 0 1 .282-3.519 4.702 4.702 0 0 1 1.153-1.371c.942-.768 2.141-1.183 3.396-1.185 1.256-.002 2.455.41 3.398 1.175.48.391.87.854 1.152 1.367a4.28 4.28 0 0 1 .522 1.706 4.236 4.236 0 0 1-.239 1.811 4.54 4.54 0 0 1-1.035 1.626",
+  archicad: "M22.5896 16.3222c-.779 0-1.4104-.6315-1.4104-1.4105 0-.779.6314-1.4104 1.4104-1.4104S24 14.1328 24 14.9117c0 .779-.6315 1.4105-1.4104 1.4105zM.1507 19.8272c-.35.6959-.0696 1.5438.6263 1.8938.6959.35 1.5438.0695 1.8938-.6263 0 0 7.8494-16.0114 14.2545-16.1487 4.2299-.0907 4.2313 5.642 4.2313 5.642 0 .779.6314 1.4104 1.4104 1.4104s1.4104-.6314 1.4104-1.4104c0 0 .0566-8.3813-7.0196-8.4569C8.7634 1.8711.1507 19.8272.1507 19.8272z",
+  autodesk: "m.129 20.202 14.7-9.136h7.625c.235 0 .445.188.445.445 0 .21-.092.305-.21.375l-7.222 4.323c-.47.283-.633.845-.633 1.265l-.008 2.725H24V4.362a.561.561 0 0 0-.585-.562h-8.752L0 12.893V20.2h.129z",
+  claude: "m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z",
+};
 
-const TOOLS: Tool[] = [
-  { name: "Adobe Illustrator", kind: "text", label: "Ai", bg: "#330000", fg: "#ff9a00" },
-  { name: "Adobe Photoshop", kind: "text", label: "Ps", bg: "#001e36", fg: "#31a8ff" },
-  { name: "Adobe After Effects", kind: "text", label: "Ae", bg: "#00005b", fg: "#c9bfff" },
-  { name: "Adobe Premiere Pro", kind: "text", label: "Pr", bg: "#2a0040", fg: "#ea77ff" },
-  { name: "Figma", kind: "figma" },
-  { name: "Claude", kind: "claude" },
-  { name: "Higgsfield", kind: "text", label: "Hf", bg: "#141414", fg: "#ffffff" },
-  { name: "Blender", kind: "text", label: "Bl", bg: "#141414", fg: "#ea7600" },
-  { name: "Archicad", kind: "text", label: "Ac", bg: "#06283c", fg: "#1ba1e2" },
-  { name: "3ds Max", kind: "text", label: "3ds", bg: "#08252b", fg: "#37a5cc" },
-];
+function Icon({ d, color, size = 26 }: { d: string; color: string; size?: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden>
+      <path fill={color} d={d} />
+    </svg>
+  );
+}
 
 function FigmaMark() {
   return (
-    <svg viewBox="0 0 38 57" width="26" height="26" aria-hidden>
+    <svg viewBox="0 0 38 57" width="24" height="24" aria-hidden>
       <path fill="#1abcfe" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" />
       <path fill="#0acf83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" />
       <path fill="#ff7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z" />
@@ -34,27 +33,24 @@ function FigmaMark() {
   );
 }
 
-function ClaudeMark() {
-  // Coral sunburst, à la the Anthropic / Claude mark.
-  const rays = Array.from({ length: 12 });
-  return (
-    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden>
-      <g fill="#d97757">
-        {rays.map((_, i) => (
-          <rect
-            key={i}
-            x="11"
-            y="1.5"
-            width="2"
-            height="9"
-            rx="1"
-            transform={`rotate(${(360 / rays.length) * i} 12 12)`}
-          />
-        ))}
-      </g>
-    </svg>
-  );
-}
+type Tool = {
+  name: string;
+  bg: string;
+  mark: ReactNode;
+};
+
+const TOOLS: Tool[] = [
+  { name: "Adobe Illustrator", bg: "#330000", mark: <span style={{ color: "#ff9a00", fontWeight: 800, fontSize: 20, letterSpacing: "-0.02em" }}>Ai</span> },
+  { name: "Adobe Photoshop", bg: "#001e36", mark: <span style={{ color: "#31a8ff", fontWeight: 800, fontSize: 20, letterSpacing: "-0.02em" }}>Ps</span> },
+  { name: "Adobe After Effects", bg: "#00005b", mark: <span style={{ color: "#c9bfff", fontWeight: 800, fontSize: 20, letterSpacing: "-0.02em" }}>Ae</span> },
+  { name: "Adobe Premiere Pro", bg: "#2a0040", mark: <span style={{ color: "#ea77ff", fontWeight: 800, fontSize: 20, letterSpacing: "-0.02em" }}>Pr</span> },
+  { name: "Figma", bg: "#141414", mark: <FigmaMark /> },
+  { name: "Claude", bg: "#141414", mark: <Icon d={SI.claude} color="#d97757" /> },
+  { name: "Higgsfield", bg: "#141414", mark: <span style={{ color: "#ffffff", fontWeight: 800, fontSize: 18 }}>Hf</span> },
+  { name: "Blender", bg: "#141414", mark: <Icon d={SI.blender} color="#e87d0d" /> },
+  { name: "Archicad", bg: "#0a1430", mark: <Icon d={SI.archicad} color="#5b8def" /> },
+  { name: "3ds Max", bg: "#0a2a33", mark: <Icon d={SI.autodesk} color="#37c6e0" /> },
+];
 
 export function ToolsCloud() {
   return (
@@ -68,20 +64,11 @@ export function ToolsCloud() {
           style={{
             width: 56,
             height: 56,
-            background: t.kind === "text" ? t.bg : "#141414",
+            background: t.bg,
             animation: `toolBob ${3 + (i % 4) * 0.4}s ease-in-out ${i * 0.18}s infinite`,
           }}
         >
-          {t.kind === "text" ? (
-            <span style={{ color: t.fg, fontWeight: 800, fontSize: t.label.length > 2 ? 16 : 20, letterSpacing: "-0.02em" }}>
-              {t.label}
-            </span>
-          ) : t.kind === "figma" ? (
-            <FigmaMark />
-          ) : (
-            <ClaudeMark />
-          )}
-          {/* name tooltip on hover */}
+          {t.mark}
           <span className="pointer-events-none absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-white/10 px-2 py-0.5 text-[11px] text-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             {t.name}
           </span>
