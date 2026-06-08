@@ -1,91 +1,65 @@
 "use client";
 // Client-only canvas for the mascot.
 //
-// The curly hair outline is too complex/self-intersecting for a WebGL
-// triangulator (extruding it gives spike/sash artifacts), so the whole mascot
-// is composited onto a 2D canvas and shown as a flat TEXTURE on a plane —
-// pixel-perfect, zero triangulation. The raw SVG paints the face + stars in
-// the hair colour, so on the canvas we repaint them white (then redraw the
-// eyes / cheeks / smile on top). A gentle wobble gives it a 3D feel.
+// To match the SVG EXACTLY with zero artifacts, we rasterise the SVG the same
+// way the browser draws it (pixel-perfect — no WebGL triangulation, no
+// heuristics), then flood-fill the interior "holes" (the face + stars, which
+// the SVG leaves transparent) to white so the face reads on the dark site
+// background. The result is shown as a flat texture with a gentle wobble.
 
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 
 const VB_W = 763.31;
 const VB_H = 845.71;
-const HAIR = "#edd262";
 
-function fillOf(path: { userData?: { style?: { fill?: string } } }) {
-  const f = path.userData?.style?.fill;
-  return f && f !== "none" ? f : "#1a1a1a";
-}
-
-function tracePath(ctx: CanvasRenderingContext2D, shape: THREE.Shape) {
-  const draw = (pts: THREE.Vector2[]) => {
-    pts.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)));
-    ctx.closePath();
-  };
-  ctx.beginPath();
-  draw(shape.getPoints(48));
-  for (const h of shape.holes) draw(h.getPoints(48));
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function paintTexture(data: any, img: HTMLImageElement): THREE.CanvasTexture {
+function buildTexture(img: HTMLImageElement): THREE.CanvasTexture {
   const s = 2;
+  const W = Math.round(VB_W * s);
+  const H = Math.round(VB_H * s);
   const cv = document.createElement("canvas");
-  cv.width = Math.round(VB_W * s);
-  cv.height = Math.round(VB_H * s);
+  cv.width = W;
+  cv.height = H;
   const ctx = cv.getContext("2d")!;
-  ctx.scale(s, s);
+  ctx.drawImage(img, 0, 0, W, H);
 
-  // 1) The raw art (hair + everything) — face + stars are hair-coloured here.
-  ctx.drawImage(img, 0, 0, VB_W, VB_H);
+  const id = ctx.getImageData(0, 0, W, H);
+  const a = id.data;
+  const N = W * H;
+  const AT = 20; // alpha threshold: above this counts as a drawn (boundary) pixel
 
-  const shapesPerPath: THREE.Shape[][] = data.paths.map((p: unknown) =>
-    SVGLoader.createShapes(p as never),
-  );
-  let headIdx = -1;
-  let headCount = 1;
-  data.paths.forEach((_p: unknown, i: number) => {
-    if (shapesPerPath[i].length > headCount) { headCount = shapesPerPath[i].length; headIdx = i; }
-  });
-
-  // 2) Repaint the hair path's smaller sub-shapes (face + stars) white.
-  if (headIdx >= 0) {
-    const shapes = shapesPerPath[headIdx];
-    const bboxArea = (sh: THREE.Shape) => {
-      const pts = sh.getPoints(24);
-      let a = Infinity, b = Infinity, c = -Infinity, d = -Infinity;
-      for (const p of pts) {
-        if (p.x < a) a = p.x; if (p.y < b) b = p.y;
-        if (p.x > c) c = p.x; if (p.y > d) d = p.y;
-      }
-      return (c - a) * (d - b);
-    };
-    const areas = shapes.map(bboxArea);
-    const bodyIdx = areas.indexOf(Math.max(...areas));
-    ctx.fillStyle = "#ffffff";
-    shapes.forEach((sh, j) => {
-      if (j === bodyIdx) return;
-      tracePath(ctx, sh);
-      ctx.fill("evenodd");
-    });
+  // Flood-fill the transparent EXTERIOR starting from the canvas borders. Any
+  // transparent pixel NOT reached is an interior hole (face / stars).
+  const outside = new Uint8Array(N);
+  const stack = new Int32Array(N);
+  let sp = 0;
+  const seed = (x: number, y: number) => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return;
+    const i = y * W + x;
+    if (outside[i] || a[i * 4 + 3] > AT) return;
+    outside[i] = 1;
+    stack[sp++] = i;
+  };
+  for (let x = 0; x < W; x++) { seed(x, 0); seed(x, H - 1); }
+  for (let y = 0; y < H; y++) { seed(0, y); seed(W - 1, y); }
+  while (sp > 0) {
+    const i = stack[--sp];
+    const x = i % W;
+    const y = (i / W) | 0;
+    seed(x - 1, y); seed(x + 1, y); seed(x, y - 1); seed(x, y + 1);
   }
 
-  // 3) Redraw facial features (eyes/lashes/smile + cheeks) on top of the white.
-  data.paths.forEach((p: unknown, i: number) => {
-    if (i === headIdx) return;
-    const hex = fillOf(p as never).toLowerCase();
-    if (hex === HAIR) return; // hair accents already painted in step 1
-    ctx.fillStyle = hex;
-    for (const sh of shapesPerPath[i]) {
-      tracePath(ctx, sh);
-      ctx.fill("evenodd");
+  // Interior transparent pixels → solid white (the face + the stars).
+  for (let i = 0; i < N; i++) {
+    if (a[i * 4 + 3] <= AT && !outside[i]) {
+      a[i * 4] = 255;
+      a[i * 4 + 1] = 255;
+      a[i * 4 + 2] = 255;
+      a[i * 4 + 3] = 255;
     }
-  });
+  }
+  ctx.putImageData(id, 0, 0);
 
   const tex = new THREE.CanvasTexture(cv);
   tex.colorSpace = THREE.SRGBColorSpace;
@@ -100,17 +74,9 @@ function MascotModel({ hovered }: { hovered: boolean }) {
 
   useEffect(() => {
     let alive = true;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let svgData: any = null;
-    let img: HTMLImageElement | null = null;
-    const tryBuild = () => { if (alive && svgData && img) setTex(paintTexture(svgData, img)); };
-
-    new SVGLoader().load("/images/mascot.svg", (d) => { svgData = d; tryBuild(); });
-
     const im = new Image();
-    im.onload = () => { img = im; tryBuild(); };
+    im.onload = () => { if (alive) setTex(buildTexture(im)); };
     im.src = "/images/mascot.svg";
-
     return () => { alive = false; };
   }, []);
 
