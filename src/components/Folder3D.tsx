@@ -271,11 +271,13 @@ export const AnimatedFolder: React.FC<AnimatedFolderProps> = ({ title, subtitle,
 
   const previewProjects = projects.slice(0, 4);
 
-  const handleProjectClick = (project: FolderProject, index: number) => {
+  const handleProjectClick = (_project: FolderProject, index: number) => {
+    // Always open the gallery at the first work, regardless of which preview
+    // card was clicked — keeps the clicked card as the animation origin.
     const el = cardRefs.current[index];
     if (el) setSourceRect(el.getBoundingClientRect());
-    setSelectedIndex(index);
-    setHiddenCardId(project.id);
+    setSelectedIndex(0);
+    setHiddenCardId(projects[0]?.id ?? null);
   };
   const handleCloseLightbox = () => { setSelectedIndex(null); setSourceRect(null); };
   const handleCloseComplete = () => { setHiddenCardId(null); };
