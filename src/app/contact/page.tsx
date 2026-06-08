@@ -45,7 +45,7 @@ export default function ContactPage() {
         <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} fov={20} />
       </div>
 
-      <section className="relative z-10 flex flex-col items-center justify-end min-h-screen px-6 pb-20 text-center pointer-events-none">
+      <section className="relative z-10 flex flex-col items-center justify-end min-h-screen px-6 pb-8 text-center pointer-events-none">
         <p className="text-white/50 text-[16px] mb-5" style={fadeUp(0)}>
           let&rsquo;s work together
         </p>
