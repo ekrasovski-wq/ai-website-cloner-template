@@ -47,6 +47,7 @@ const CATEGORIES: { title: string; gradient: string; projects: FolderProject[] }
       { id: "ai-catwalk", image: "/images/ai/catwalk.jpg", title: "Catwalk", video: "/videos/catwalk.mp4" },
       { id: "ai-alienlab", image: "/images/ai/alienlab.jpg", title: "Alienlab", video: "/videos/alienlab.mp4" },
       { id: "ai-urbanique", image: "/images/ai/finalcomp2.jpg", title: "Urbanique", video: "/videos/finalcomp2.mp4" },
+      { id: "ai-catwalk2", image: "/images/ai/catwalk2.jpg", title: "Catwalk 2", video: "/videos/catwalk2.mp4" },
     ],
   },
 ];
