@@ -18,6 +18,7 @@ export interface FolderProject {
   id: string;
   image: string;
   title: string;
+  video?: string; // optional video; plays in the lightbox (image is the poster)
 }
 
 const PLACEHOLDER_IMAGE =
@@ -192,13 +193,26 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
           <div className="relative overflow-hidden aspect-[4/3] md:aspect-[16/10] bg-neutral-950">
             <div className="flex w-full h-full"
               style={{ transform: `translateX(-${internalIndex * 100}%)`, transition: isSliding ? "transform 500ms cubic-bezier(0.16,1,0.3,1)" : "none" }}>
-              {projects.map((project) => (
+              {projects.map((project, idx) => (
                 <div key={project.id} className="min-w-full h-full relative flex items-center justify-center">
-                  {/* object-contain so the whole image is visible (posts are
-                      square/portrait and would otherwise be cropped). */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={project.image || PLACEHOLDER_IMAGE} alt={project.title} className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-                    onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE; }} />
+                  {/* object-contain so the whole asset is visible (posts/videos
+                      are square/portrait and would otherwise be cropped). */}
+                  {project.video ? (
+                    <video
+                      src={project.video}
+                      poster={project.image || undefined}
+                      className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+                      controls
+                      loop
+                      muted
+                      playsInline
+                      autoPlay={idx === internalIndex}
+                    />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={project.image || PLACEHOLDER_IMAGE} alt={project.title} className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+                      onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE; }} />
+                  )}
                 </div>
               ))}
             </div>

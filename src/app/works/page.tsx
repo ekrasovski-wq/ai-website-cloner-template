@@ -40,6 +40,14 @@ const CATEGORIES: { title: string; gradient: string; projects: FolderProject[] }
       title: `Post ${i + 1}`,
     })),
   },
+  {
+    title: "AI",
+    gradient: "linear-gradient(160deg, #5a4a86, #3a2f5f)",   // muted violet
+    projects: [
+      { id: "ai-catwalk", image: "/images/ai/catwalk.jpg", title: "Catwalk", video: "/videos/catwalk.mp4" },
+      { id: "ai-alienlab", image: "/images/ai/alienlab.jpg", title: "Alienlab", video: "/videos/alienlab.mp4" },
+    ],
+  },
 ];
 
 export default function WorksPage() {
