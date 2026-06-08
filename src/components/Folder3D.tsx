@@ -6,7 +6,7 @@
 import React, {
   useState, useRef, useEffect, useLayoutEffect, useCallback, forwardRef,
 } from "react";
-import { X, ChevronLeft, ChevronRight, Settings } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Settings, ExternalLink } from "lucide-react";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -19,6 +19,7 @@ export interface FolderProject {
   image: string;
   title: string;
   video?: string; // optional video; plays in the lightbox (image is the poster)
+  link?: string;  // optional full project (e.g. PDF); opens via the lightbox button
 }
 
 const PLACEHOLDER_IMAGE =
@@ -232,6 +233,18 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
                   <p className="text-xs font-bold uppercase tracking-widest text-white/50">{internalIndex + 1} / {totalProjects}</p>
                 </div>
               </div>
+              {currentProject?.link && (
+                <a
+                  href={currentProject.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="shrink-0 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-neutral-900 transition-all duration-300 hover:bg-white/80 hover:scale-105 active:scale-95"
+                >
+                  View full project
+                  <ExternalLink className="w-4 h-4" strokeWidth={2.5} />
+                </a>
+              )}
             </div>
           </div>
         </div>

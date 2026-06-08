@@ -29,7 +29,7 @@ const CATEGORIES: { title: string; gradient: string; projects: FolderProject[] }
   {
     title: "Branding",
     gradient: "linear-gradient(160deg, #4a5a86, #33405f)",   // muted indigo
-    projects: PROJECTS.slice(4, 9).map((p) => ({ id: `brand-${p.id}`, image: p.sticker, title: p.title })),
+    projects: PROJECTS.slice(4, 9).map((p) => ({ id: `brand-${p.id}`, image: p.sticker, title: p.title, link: p.pdf })),
   },
   {
     title: "Posts",
