@@ -27,11 +27,6 @@ const CATEGORIES: { title: string; gradient: string; projects: FolderProject[] }
     })),
   },
   {
-    title: "Banners",
-    gradient: "linear-gradient(160deg, #3f7d6e, #2b5a4f)",   // muted teal
-    projects: PROJECTS.slice(2, 7).map((p) => ({ id: `banner-${p.id}`, image: p.sticker, title: p.title })),
-  },
-  {
     title: "Branding",
     gradient: "linear-gradient(160deg, #4a5a86, #33405f)",   // muted indigo
     projects: PROJECTS.slice(4, 9).map((p) => ({ id: `brand-${p.id}`, image: p.sticker, title: p.title })),
