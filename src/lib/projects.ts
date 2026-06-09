@@ -141,22 +141,6 @@ export const PROJECTS: Project[] = [
     pdf: "/works/vebi-beh.pdf",
   },
   {
-    id: 9,
-    title: "Case way",
-    slug: "way-fixy",
-    year: 2023,
-    shortDescription: "Brandbook case study.",
-    sticker: "/images/works/way-fixy-0.jpg",
-    styleframes: [
-      "/images/works/way-fixy-0.jpg",
-      "/images/works/way-fixy-1.jpg",
-      "/images/works/way-fixy-2.jpg",
-      "/images/works/way-fixy-3.jpg",
-      "/images/works/way-fixy-4.jpg",
-    ],
-    pdf: "/works/way-fixy.pdf",
-  },
-  {
     id: 10,
     title: "Clair",
     slug: "clair-brandbook",
