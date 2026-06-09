@@ -172,6 +172,22 @@ export const PROJECTS: Project[] = [
     ],
     pdf: "/works/clair-brandbook.pdf",
   },
+  {
+    id: 11,
+    title: "Caseway",
+    slug: "caseway-brandbook",
+    year: 2026,
+    shortDescription: "Complete brand identity & guidelines.",
+    sticker: "/images/works/case-study-0.jpg",
+    styleframes: [
+      "/images/works/case-study-0.jpg",
+      "/images/works/case-study-1.jpg",
+      "/images/works/case-study-2.jpg",
+      "/images/works/case-study-3.jpg",
+      "/images/works/case-study-4.jpg",
+    ],
+    pdf: "/works/case-study.pdf",
+  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
