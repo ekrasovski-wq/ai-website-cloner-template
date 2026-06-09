@@ -26,7 +26,7 @@ export function EntryOverlay({ onEnter }: { onEnter: () => void }) {
         <Mascot3D size={110} />
       </div>
       <div className="mb-6 text-[15px] tracking-wide text-white/90 text-center leading-tight">
-        visual &amp; UI/UX designer
+        Brand and visual designer
         <br />based in tbilisi
       </div>
       <div className="flex gap-8 items-center text-[15px] mt-4">
