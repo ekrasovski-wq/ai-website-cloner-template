@@ -3,9 +3,8 @@ import "./globals.css";
 import GradualBlur from "@/components/GradualBlur";
 
 export const metadata: Metadata = {
-  title: "Pacôme Pertant ✲ Portfolio",
-  description: "motion & sound designer based in paris",
-  icons: { icon: "/favicon.svg" },
+  title: "Elene Krasowski",
+  description: "visual & UI/UX designer based in Tbilisi",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
