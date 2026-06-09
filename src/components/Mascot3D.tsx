@@ -1,18 +1,14 @@
 "use client";
-// 3D mascot — the hand-drawn "starry curly hair" face SVG, extruded into a
-// real 3D object. The WebGL canvas lives in MascotCanvas and is loaded
-// client-only; this wrapper handles sizing, the float animation, hover and the
-// smiley click sound.
+// Mascot logo — the hand-drawn "starry curly hair" face. Previously rendered in
+// a per-instance WebGL canvas (with a 2.5M-pixel flood-fill on load + an
+// always-on render loop), which janked weak laptops because this logo sits on
+// EVERY page. It's now a pre-rendered transparent PNG shown as a plain <img>
+// with a CSS float + hover lift — visually the same, but zero WebGL/CPU cost.
 
-import { useState } from "react";
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import { play } from "@/lib/sounds";
 
-const MascotCanvas = dynamic(() => import("./MascotCanvas"), { ssr: false });
-
 export function Mascot3D({ size = 96, onClick }: { size?: number; onClick?: () => void }) {
-  const [hovered, setHovered] = useState(false);
-
   const handleClick = () => {
     play("smiley/smiley1");
     onClick?.();
@@ -28,17 +24,24 @@ export function Mascot3D({ size = 96, onClick }: { size?: number; onClick?: () =
         animation: "logoFloat 6s ease-in-out infinite",
         filter: "drop-shadow(0 8px 26px rgba(67, 59, 56, 0.35))",
       }}
-      className="select-none"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="mascot-logo select-none"
       onClick={handleClick}
     >
-      <MascotCanvas hovered={hovered} />
+      <Image
+        src="/images/mascot-logo.png"
+        alt="Elene Krasowski"
+        fill
+        sizes="110px"
+        priority
+        draggable={false}
+        style={{ objectFit: "contain", transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1)" }}
+      />
       <style jsx global>{`
         @keyframes logoFloat {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
         }
+        .mascot-logo:hover img { transform: scale(1.08); }
       `}</style>
     </div>
   );

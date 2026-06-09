@@ -472,8 +472,10 @@ export function ProjectsCarousel3D({
         // On phones the camera sits further back (and a tad wider FOV) so the
         // whole spiral fits the tall narrow viewport.
         camera={{ position: [0, 0, isMobile ? 8.4 : 6.2], fov: isMobile ? 58 : 50 }}
-        gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        // Cap pixel ratio at 1.5 — on retina screens dpr 2 renders 4× the
+        // pixels, which janks weaker laptops for little visible gain.
+        dpr={[1, 1.5]}
       >
         <ambientLight intensity={1} />
         <World
