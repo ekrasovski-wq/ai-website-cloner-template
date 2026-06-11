@@ -172,6 +172,22 @@ export const PROJECTS: Project[] = [
     ],
     pdf: "/works/case-study.pdf",
   },
+  {
+    id: 12,
+    title: "Nizhara",
+    slug: "nizhara-branding",
+    year: 2026,
+    shortDescription: "Jewelry brand identity & guidelines.",
+    sticker: "/images/works/nizhara-branding-0.jpg",
+    styleframes: [
+      "/images/works/nizhara-branding-0.jpg",
+      "/images/works/nizhara-branding-1.jpg",
+      "/images/works/nizhara-branding-2.jpg",
+      "/images/works/nizhara-branding-3.jpg",
+      "/images/works/nizhara-branding-4.jpg",
+    ],
+    pdf: "/works/nizhara-branding.pdf",
+  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {

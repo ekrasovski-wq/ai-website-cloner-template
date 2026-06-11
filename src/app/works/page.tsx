@@ -29,7 +29,7 @@ const CATEGORIES: { title: string; gradient: string; projects: FolderProject[] }
   {
     title: "Branding",
     gradient: "linear-gradient(160deg, #4a5a86, #33405f)",   // muted indigo
-    projects: [...PROJECTS.slice(4, 8), ...PROJECTS.filter((p) => p.slug === "caseway-brandbook")].map((p) => ({ id: `brand-${p.id}`, image: p.sticker, title: p.title, link: p.pdf })),
+    projects: [...PROJECTS.slice(4, 8), ...PROJECTS.filter((p) => p.slug === "caseway-brandbook" || p.slug === "nizhara-branding")].map((p) => ({ id: `brand-${p.id}`, image: p.sticker, title: p.title, link: p.pdf })),
   },
   {
     title: "Posts",
