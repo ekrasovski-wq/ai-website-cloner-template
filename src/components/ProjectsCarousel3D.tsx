@@ -154,6 +154,12 @@ function ProjectPlane({
       uScrollSpeed: { value: 0 },
       uRadius: { value: 0.06 },
       uRevealProgress: { value: 1 },  // 1 = fully revealed (default = visible)
+      // Depth-of-field focus window, tied to the camera distance. Desktop
+      // camera sits at z=6.2 (focus 5.0 / far 8.5); mobile pulls back to
+      // z=8.4, so the window shifts out the same amount — otherwise the
+      // front cards fall beyond `far` and the whole spiral renders blurry.
+      uFocusZ: { value: isMobile ? 7.2 : 5.0 },
+      uFarZ: { value: isMobile ? 10.7 : 8.5 },
     },
     vertexShader: `
       // Verbatim transcription of pacomepertant.com's ProjectPlane shader,
@@ -189,6 +195,8 @@ function ProjectPlane({
       uniform float uScrollSpeed;
       uniform float uRadius;
       uniform float uRevealProgress;
+      uniform float uFocusZ;
+      uniform float uFarZ;
       varying vec2 vUv;
       varying float vDepth;
 
@@ -230,8 +238,8 @@ function ProjectPlane({
         // DOF: focus depth ~ camera Z minus baseRadius. Cards at the
         // focus plane render crisp; depth beyond that adds blur.
         // Empirically camera z = 6.2, front cards at z ≈ 4.2, back ≈ 8.2.
-        float focusZ = 5.0;
-        float farZ = 8.5;
+        float focusZ = uFocusZ;
+        float farZ = uFarZ;
         float falloff = clamp((vDepth - focusZ) / (farZ - focusZ), 0.0, 1.0);
         float blur = falloff * 0.018;
         vec4 col = sampleBlurred(sampled, blur);
@@ -249,7 +257,7 @@ function ProjectPlane({
         gl_FragColor = col;
       }
     `,
-  }), [texture]);
+  }), [texture, isMobile]);
 
   return (
     <mesh
@@ -473,9 +481,10 @@ export function ProjectsCarousel3D({
         // whole spiral fits the tall narrow viewport.
         camera={{ position: [0, 0, isMobile ? 8.4 : 6.2], fov: isMobile ? 58 : 50 }}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-        // Cap pixel ratio at 1.5 — on retina screens dpr 2 renders 4× the
-        // pixels, which janks weaker laptops for little visible gain.
-        dpr={[1, 1.5]}
+        // Desktop: cap at 1.5 (retina dpr 2 = 4× pixels, janks weak laptops).
+        // Mobile: allow 2 — the small high-density screen makes the spiral
+        // look soft at 1.5, and only this one canvas runs on mobile.
+        dpr={[1, isMobile ? 2 : 1.5]}
       >
         <ambientLight intensity={1} />
         <World

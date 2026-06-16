@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { play } from "@/lib/sounds";
 import VariableProximity from "./VariableProximity";
@@ -51,6 +51,15 @@ export function MorphingMenu({
   const navRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
   const menuLabelRef = useRef<HTMLSpanElement>(null);
+  // Smaller, tighter pill on phones so it matches the spiral/list switch
+  // scale and doesn't tower over the left-hand controls.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const update = () => setIsMobile(window.innerWidth < 640);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
   // Suppresses link/footer hover sounds for a brief window right after the
   // menu opens — otherwise the morphing pill drags the cursor across the
   // newly-revealed links, triggering 2-3 stacked "click" sounds in a row.
@@ -92,13 +101,15 @@ export function MorphingMenu({
   // open card (32px), but visually still LOOKS like a pill because the box
   // is short (32px radius on a 42px-tall box already rounds the ends fully).
   // This keeps the corners CONSTANT through the morph — no egg shape.
-  const closedWidth = 92;      // slimmer pill width
-  const closedHeight = 42;     // slimmer pill height — matches Pacome reference
+  const closedWidth = isMobile ? 74 : 92;      // slimmer pill width
+  const closedHeight = isMobile ? 36 : 42;     // slimmer pill height — matches Pacome reference
+  const edge = isMobile ? 16 : 24;             // distance from the screen corner
+  const labelFont = isMobile ? 14 : 16;        // "menu" / "close" label size
   const openWidthCSS = "min(560px, calc(100vw - 60px))";
   const openHeightCSS = "calc(100vh - 48px)";
 
   // The little dot turns into the big ✕ circle
-  const dotClosedSize = 8;
+  const dotClosedSize = isMobile ? 7 : 8;
   const dotOpenSize = 36;
 
   return (
@@ -131,8 +142,8 @@ export function MorphingMenu({
         aria-label={open ? "close menu" : "open menu"}
         className="fixed z-40 bg-white text-black overflow-hidden text-left"
         style={{
-          top: "24px",
-          right: "24px",
+          top: open ? "24px" : `${edge}px`,
+          right: open ? "24px" : `${edge}px`,
           width: open ? openWidthCSS : `${closedWidth}px`,
           height: open ? openHeightCSS : `${closedHeight}px`,
           borderRadius: "32px",
@@ -161,10 +172,11 @@ export function MorphingMenu({
             by the global mousemove listener that VariableProximity attaches. */}
         <span
           ref={menuLabelRef}
-          className="absolute select-none text-[16px]"
+          className="absolute select-none"
           style={{
-            top: open ? "30px" : "11px",
-            right: open ? "82px" : "36px",
+            fontSize: `${labelFont}px`,
+            top: open ? "30px" : `${isMobile ? 9 : 11}px`,
+            right: open ? "82px" : `${isMobile ? 28 : 36}px`,
             opacity: open ? 0 : 1,
             color: "#000",
             position: "absolute",
@@ -178,7 +190,7 @@ export function MorphingMenu({
             label="menu"
             style={{
               fontFamily: 'Indivisible, "Helvetica Neue", Arial, sans-serif',
-              fontSize: "16px",
+              fontSize: `${labelFont}px`,
               fontWeight: 500,
               display: "inline-block",
             }}
@@ -264,7 +276,7 @@ export function MorphingMenu({
                 }}
                 onMouseEnter={() => { if (!justOpenedRef.current) play(l.sound); }}
                 onClick={() => play("click")}
-                className="menu-nav-link group relative inline-flex items-center gap-4 text-[72px] leading-[1.05] tracking-tight hover:text-black transition-colors"
+                className="menu-nav-link group relative inline-flex items-center gap-4 text-[44px] sm:text-[72px] leading-[1.05] tracking-tight hover:text-black transition-colors"
               >
                 {/* Bullet pill — expands from 0 to a small rounded tab on
                     hover. Tracks the parent Link hover via Tailwind group. */}
