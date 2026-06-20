@@ -15,14 +15,17 @@ export default function AboutPage() {
   useLenis();
 
   return (
-    <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-hidden">
+    <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden overflow-y-auto sm:overflow-hidden">
       <div className="grid-bg" />
       <TopLogo />
       <MenuButton open={menuOpen} setOpen={setMenuOpen} />
       <MenuPanel open={menuOpen} setOpen={setMenuOpen} />
 
-      {/* About text — letters thicken as the cursor approaches them. */}
-      <section className="relative z-10 flex items-center justify-center min-h-screen px-6">
+      {/* About text — letters thicken as the cursor approaches them.
+          Mobile: top-aligned + padded so the (taller-than-viewport) column
+          scrolls and nothing clips above the fold. Desktop (sm:) restores the
+          original vertical-centered layout exactly. */}
+      <section className="relative z-10 flex items-start justify-center min-h-screen px-6 pt-28 pb-16 sm:items-center sm:pt-0 sm:pb-0">
         <div ref={textRef} style={{ position: "relative" }} className="max-w-[860px] text-center">
           <VariableProximity
             label={

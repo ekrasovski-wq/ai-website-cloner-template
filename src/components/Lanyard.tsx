@@ -43,12 +43,24 @@ export default function Lanyard({
   }, []);
 
   return (
-    <div className="relative z-0 w-full h-full flex items-center justify-center">
+    <div
+      className="relative z-0 w-full h-full flex items-center justify-center"
+      style={{ touchAction: "none" }}
+    >
       <Canvas
         camera={{ position, fov }}
         dpr={[1, 1.5]}
         gl={{ alpha: transparent }}
-        onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
+        style={{ touchAction: "none" }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
+          // Set touch-action:none on the ACTUAL canvas element (the Canvas
+          // `style` prop only reaches r3f's container div, and touch-action
+          // is not inherited). Without this, mobile browsers hijack the
+          // touch gesture for page scroll and cancel the pointer stream, so
+          // the badge can't be dragged. No-op for mouse → web unchanged.
+          gl.domElement.style.touchAction = "none";
+        }}
       >
         <ambientLight intensity={Math.PI} />
         <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
