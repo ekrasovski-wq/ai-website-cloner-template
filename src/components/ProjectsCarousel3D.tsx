@@ -302,6 +302,13 @@ interface WorldProps {
   onSelect: (i: number) => void;
 }
 
+// Carousel cards are small on screen, so load lightweight 720px thumbnails
+// (public/images/works/cards/*) instead of the full-res detail stickers.
+// Cuts the spiral's texture payload ~2.6x for a much faster first paint.
+function thumb(sticker: string) {
+  return sticker.replace("/images/works/", "/images/works/cards/");
+}
+
 function World({ scrollOffsetRef, wheelDeltaRef, bendRef, visible, isMobile, onHover, onSelect }: WorldProps) {
   // Pacome doubles the project list. We do the same.
   const planes = useMemo(() => {
@@ -316,7 +323,7 @@ function World({ scrollOffsetRef, wheelDeltaRef, bendRef, visible, isMobile, onH
       {planes.map((p, i) => (
         <ProjectPlane
           key={i}
-          url={p.project.sticker}
+          url={thumb(p.project.sticker)}
           index={p.index}
           projectsCount={projectsCount}
           centerIndex={centerIndex}
@@ -529,7 +536,7 @@ export function ProjectsCarousel3D({
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={PROJECTS[hovered].sticker}
+              src={thumb(PROJECTS[hovered].sticker)}
               alt=""
               className="w-9 h-9 rounded-full object-cover bg-gray-100"
             />

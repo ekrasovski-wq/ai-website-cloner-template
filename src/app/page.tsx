@@ -1,8 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { EntryOverlay } from "@/components/EntryOverlay";
-import { ProjectsCarousel3D } from "@/components/ProjectsCarousel3D";
 import { ProjectsList } from "@/components/ProjectsList";
+
+// The 3D spiral pulls in three.js / r3f (~1MB). Load it as its own chunk so
+// the entry splash + page shell paint immediately instead of waiting on it.
+const ProjectsCarousel3D = dynamic(
+  () => import("@/components/ProjectsCarousel3D").then((m) => m.ProjectsCarousel3D),
+  { ssr: false },
+);
 import { ViewSwitch, type ViewMode } from "@/components/ViewSwitch";
 import { MenuButton, MenuPanel } from "@/components/MenuPanel";
 import { SoundToggle } from "@/components/SoundToggle";
