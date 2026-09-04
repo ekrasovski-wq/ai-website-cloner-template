@@ -158,6 +158,19 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+// Projects hidden from the home page (spiral + list) but still kept in the
+// dataset so they appear in the Works "Branding" folder and remain reachable
+// on their detail page.
+export const HOME_HIDDEN_SLUGS = [
+  "caseway-brandbook", // Caseway
+  "kompozicia",        // Composition
+  "clair-brandbook",   // Clair
+  "amore",             // Amore
+];
+
+// The subset shown on the home spiral + list.
+export const HOME_PROJECTS = PROJECTS.filter((p) => !HOME_HIDDEN_SLUGS.includes(p.slug));
+
 export function getProjectBySlug(slug: string): Project | undefined {
   return PROJECTS.find((p) => p.slug === slug);
 }

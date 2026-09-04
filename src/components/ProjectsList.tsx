@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { PROJECTS } from "@/lib/projects";
+import { HOME_PROJECTS as PROJECTS } from "@/lib/projects";
 import { play } from "@/lib/sounds";
 
 export function ProjectsList({ visible = true }: { visible?: boolean }) {

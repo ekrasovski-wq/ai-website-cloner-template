@@ -19,7 +19,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Canvas, useFrame, useLoader, ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
-import { PROJECTS } from "@/lib/projects";
+import { HOME_PROJECTS as PROJECTS } from "@/lib/projects";
 import { play } from "@/lib/sounds";
 
 // Pacome's exact constants
