@@ -43,17 +43,6 @@ const CATEGORIES: { title: string; gradient: string; projects: FolderProject[] }
       title: `Post ${i + 1}`,
     })),
   },
-  {
-    title: "AI",
-    gradient: "linear-gradient(160deg, #5a4a86, #3a2f5f)",   // muted violet
-    projects: [
-      { id: "ai-catwalk", image: "/images/ai/catwalk.jpg", title: "Catwalk", video: "/videos/catwalk.mp4" },
-      { id: "ai-alienlab", image: "/images/ai/alienlab.jpg", title: "Alienlab", video: "/videos/alienlab.mp4" },
-      { id: "ai-urbanique", image: "/images/ai/finalcomp2.jpg", title: "Urbanique", video: "/videos/finalcomp2.mp4" },
-      { id: "ai-catwalk2", image: "/images/ai/catwalk2.jpg", title: "Catwalk 2", video: "/videos/catwalk2.mp4" },
-      { id: "ai-womansday", image: "/images/ai/catwalk-womansday.jpg", title: "Catwalk — Woman's Day", video: "/videos/catwalk-womansday.mp4" },
-    ],
-  },
 ];
 
 export default function WorksPage() {
