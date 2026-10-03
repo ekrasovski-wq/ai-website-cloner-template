@@ -261,6 +261,7 @@ export function MorphingMenu({
               // All links share the same hover chime (matches the social icons).
               { href: "/works",   label: "works",   sound: "hover" as const },
               { href: "/about",   label: "about",   sound: "hover" as const },
+              { href: "/resume",  label: "résumé",  sound: "hover" as const },
               { href: "/contact", label: "contact", sound: "hover" as const },
             ].map((l) => (
               <Link
