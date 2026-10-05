@@ -51,7 +51,7 @@ const EXPERIENCE: { role: string; org: string; period: string; link?: string; po
   {
     role: "Graphic Designer",
     org: "Catwalk · catwalk.ge",
-    period: "Present",
+    period: "Sep 2026 — Present",
     link: "https://www.instagram.com/catwalk.ge",
     points: [
       "Graphic designer for Catwalk and Catwalk Men — posts, stories and print materials.",
