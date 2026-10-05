@@ -53,6 +53,12 @@ const CATEGORIES: { title: string; gradient: string; projects: FolderProject[] }
         title: "ALIENLAB — Lab Tour",
         video: "/videos/alienlab-lab-tour.mp4",
       },
+      {
+        id: "video-catwalk-latuka",
+        image: "/images/video/catwalk-latuka.jpg",
+        title: "Catwalk × La'Tuka",
+        video: "/videos/catwalk-latuka.mp4",
+      },
     ],
   },
 ];
