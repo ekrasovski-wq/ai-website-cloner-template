@@ -156,6 +156,25 @@ export const PROJECTS: Project[] = [
     ],
     pdf: "/works/nizhara-branding.pdf",
   },
+  {
+    id: 13,
+    title: "Tekhili",
+    slug: "tekhili-typeface",
+    year: 2026,
+    shortDescription: "A new Georgian display typeface — one straight cut per letter.",
+    sticker: "/images/works/tekhili-0.jpg",
+    styleframes: [
+      "/images/works/tekhili-0.jpg",
+      "/images/works/tekhili-1.jpg",
+      "/images/works/tekhili-2.jpg",
+      "/images/works/tekhili-3.jpg",
+      "/images/works/tekhili-4.jpg",
+      "/images/works/tekhili-5.jpg",
+      "/images/works/tekhili-6.jpg",
+      "/images/works/tekhili-7.jpg",
+    ],
+    pdf: "/works/tekhili-typeface.pdf",
+  },
 ];
 
 // Projects hidden from the home page (spiral + list) but still kept in the
