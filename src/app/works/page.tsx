@@ -43,6 +43,18 @@ const CATEGORIES: { title: string; gradient: string; projects: FolderProject[] }
       title: `Post ${i + 1}`,
     })),
   },
+  {
+    title: "Video",
+    gradient: "linear-gradient(160deg, #5a6b2e, #2c3a16)",   // muted alienlab green
+    projects: [
+      {
+        id: "video-alienlab-labtour",
+        image: "/images/video/alienlab-lab-tour.jpg",
+        title: "ALIENLAB — Lab Tour",
+        video: "/videos/alienlab-lab-tour.mp4",
+      },
+    ],
+  },
 ];
 
 export default function WorksPage() {
