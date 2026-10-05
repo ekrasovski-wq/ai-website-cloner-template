@@ -16,10 +16,11 @@ const ACCENT = "#edd262"; // blonde — matches the mascot logo
 const SANS = 'Indivisible, "Helvetica Neue", Arial, sans-serif';
 
 const ROLES = [
-  "Graphic Designer",
-  "Brand Identity Specialist",
-  "Design Lead",
-  "Lecturer",
+  "Brand & Visual Designer",
+  "Brand Identity & Brand Books",
+  "Georgian Type Design",
+  "AI Visuals",
+  "Lecturer at Skillwill",
 ];
 
 const FACTS = [
@@ -28,68 +29,102 @@ const FACTS = [
   "Open to remote · relocating to Spain",
 ];
 
-const EXPERIENCE: { role: string; org: string; period: string; points: string[] }[] = [
+const EXPERIENCE: { role: string; org: string; period: string; link?: string; points: string[] }[] = [
   {
-    role: "Graphic Designer",
-    org: "Alienlab Creative Agency",
-    period: "Mar 2026 — Present",
+    role: "Senior Graphic Designer",
+    org: "Alien Lab",
+    period: "Apr 2026 — Present",
     points: [
-      "Branding materials, campaign visuals, social content and marketing assets for clients across industries.",
-      "Develop visual concepts with the creative team, keeping brand communication consistent.",
-      "Contribute to brand identities, advertising campaigns and digital design projects.",
+      "Visual design for Alien Lab, an AI creative studio — social campaigns, covers and carousels, motion loops and brand assets.",
+      "Combine classic design craft with AI-generated imagery and video.",
     ],
   },
   {
-    role: "Graphic Design Lecturer",
+    role: "Graphic Designer",
+    org: "Mybusiness.ge",
+    period: "May 2026 — Present",
+    points: [
+      "Brand designer for mybusiness.ge, Georgia's business marketplace.",
+      "Built the full brand book — logo architecture, colour palette, typography system and guidelines — plus ongoing marketing and digital design.",
+    ],
+  },
+  {
+    role: "Graphic Designer",
+    org: "Catwalk · catwalk.ge",
+    period: "Present",
+    link: "https://www.instagram.com/catwalk.ge",
+    points: [
+      "Graphic designer for Catwalk and Catwalk Men — posts, stories and print materials.",
+      "Keep both brands visually consistent across social and print.",
+    ],
+  },
+  {
+    role: "Lecturer",
     org: "Skillwill Swiss College",
-    period: "2025 — Present",
+    period: "Nov 2025 — Present",
     points: [
-      "Teach Adobe software, branding principles and visual communication strategies.",
-      "Deliver structured programs to 320+ adult students and mentor portfolio development.",
-    ],
-  },
-  {
-    role: "Design Lead",
-    org: "Gstore",
-    period: "2024 — 2025",
-    points: [
-      "Led the brand's visual direction and campaign visuals across digital ecosystems.",
-      "Produced high-converting assets with cross-functional marketing teams.",
-    ],
-  },
-  {
-    role: "Freelance Graphic Designer",
-    org: "Remote",
-    period: "2022 — Present",
-    points: [
-      "Amazon A+ content, complete brand identity systems and conversion-focused visuals for international e-commerce clients.",
+      "Teach graphic design — typography, layout, branding and Adobe tools.",
+      "Real client-style briefs and portfolio-ready projects, mentoring 320+ students.",
     ],
   },
   {
     role: "Graphic Designer",
-    org: "Bangkok Restaurant",
-    period: "2022",
+    org: "Varketili Mall",
+    period: "May 2026 — Sep 2026",
     points: [
-      "Core visual branding, menu layouts and localized print and digital advertising.",
+      "Brand identity and image design — campaign and social visuals for the mall.",
+    ],
+  },
+  {
+    role: "Graphic Designer",
+    org: "Urbanique",
+    period: "Mar 2026 — Sep 2026",
+    points: [
+      "Social media and online graphics for the Urbanique brand.",
+    ],
+  },
+  {
+    role: "Graphic Designer",
+    org: "Inoffice",
+    period: "Feb 2026 — Sep 2026",
+    points: [
+      "Social media and computer-graphics design for Inoffice.",
+    ],
+  },
+  {
+    role: "Graphic Designer",
+    org: "Gstore",
+    period: "Apr 2025 — Feb 2026",
+    points: [
+      "Image design and artworking across the store's digital channels.",
+    ],
+  },
+  {
+    role: "Senior Graphic Designer",
+    org: "Makler.ge",
+    period: "Sep 2023 — Jul 2024",
+    points: [
+      "Artworking and online graphics for the Makler.ge marketplace.",
     ],
   },
 ];
 
 const EDUCATION: { title: string; meta: string }[] = [
-  { title: "Bachelor's Degree in Graphic Design", meta: "Ongoing" },
+  { title: "Bachelor's Degree in Graphic Design", meta: "Caucasus University · Graduated" },
   { title: "Graphic Design Diploma", meta: "IT Step Academy · 2020 — 2022" },
   { title: "Adobe Certified Designer", meta: "Certification" },
 ];
 
 const SKILLS = [
   "Brand Identity & Logo Design",
+  "Brand Books",
+  "Georgian Type Design",
+  "AI Visuals",
   "Creative Direction",
-  "Design Leadership",
   "Typography & Layout",
-  "UX/UI Fundamentals",
+  "Social Media Design",
   "Motion Design",
   "Amazon A+ Content",
-  "E-commerce Visuals",
   "Design Education & Mentorship",
 ];
 
@@ -105,6 +140,7 @@ const TOOLS = [
 const LANGUAGES: { name: string; level: string; pct: number }[] = [
   { name: "Georgian", level: "Native", pct: 100 },
   { name: "English", level: "Professional Working", pct: 80 },
+  { name: "Russian", level: "Elementary · A2", pct: 35 },
   { name: "Spanish", level: "Elementary · A1", pct: 25 },
 ];
 
@@ -194,9 +230,10 @@ export default function ResumePage() {
 
           <Reveal delay={0.18}>
             <p className="mt-10 max-w-[640px] text-white/55 text-[16px] sm:text-[18px] leading-[1.6]">
-              Creative, results-driven graphic designer with 3+ years in branding,
-              e-commerce design and digital marketing — building brand identity
-              systems and conversion-focused visuals for local and international clients.
+              Brand &amp; visual designer specialising in brand identities, brand books,
+              Georgian type design and AI-driven visuals. Building complete brand systems
+              for Georgian and international clients — and teaching the next generation of
+              designers at Skillwill.
             </p>
           </Reveal>
 
@@ -252,9 +289,21 @@ export default function ResumePage() {
                         {job.period}
                       </span>
                     </div>
-                    <p className="mt-1 text-[15px] sm:text-[16px]" style={{ color: ACCENT, fontFamily: SANS }}>
-                      {job.org}
-                    </p>
+                    {job.link ? (
+                      <a
+                        href={job.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 inline-block text-[15px] sm:text-[16px] underline-offset-4 hover:underline"
+                        style={{ color: ACCENT, fontFamily: SANS }}
+                      >
+                        {job.org} ↗
+                      </a>
+                    ) : (
+                      <p className="mt-1 text-[15px] sm:text-[16px]" style={{ color: ACCENT, fontFamily: SANS }}>
+                        {job.org}
+                      </p>
+                    )}
                     <ul className="mt-4 flex flex-col gap-2.5">
                       {job.points.map((p, j) => (
                         <li key={j} className="flex gap-3 text-white/55 text-[14.5px] sm:text-[15.5px] leading-[1.55]">
