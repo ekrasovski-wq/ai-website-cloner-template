@@ -192,30 +192,47 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
         style={{ ...currentStyles, transform: isClosing ? "translate(0,0) scale(0.92)" : currentStyles.transform, transition: animationPhase === "initial" && !isClosing ? "none" : "transform 700ms cubic-bezier(0.16,1,0.3,1), opacity 600ms ease-out, border-radius 700ms ease", transformOrigin: "center center" }}>
         <div className="relative overflow-hidden rounded-[inherit] bg-neutral-900 border border-white/10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)]">
           <div className="relative overflow-hidden aspect-[4/3] md:aspect-[16/10] bg-neutral-950">
+            {/* Slides sit at 86% width so the previous/next ones peek in at the
+                left/right edges — a visible cue that the gallery can be paged.
+                Non-active slides are dimmed and click to navigate to them. */}
             <div className="flex w-full h-full"
-              style={{ transform: `translateX(-${internalIndex * 100}%)`, transition: isSliding ? "transform 500ms cubic-bezier(0.16,1,0.3,1)" : "none" }}>
-              {projects.map((project, idx) => (
-                <div key={project.id} className="min-w-full h-full relative flex items-center justify-center">
-                  {/* object-contain so the whole asset is visible (posts/videos
-                      are square/portrait and would otherwise be cropped). */}
-                  {project.video ? (
-                    <video
-                      src={project.video}
-                      poster={project.image || undefined}
-                      className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-                      controls
-                      loop
-                      muted
-                      playsInline
-                      autoPlay={idx === internalIndex}
-                    />
-                  ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={project.image || PLACEHOLDER_IMAGE} alt={project.title} className="max-w-full max-h-full w-auto h-auto object-contain select-none"
-                      onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE; }} />
-                  )}
-                </div>
-              ))}
+              style={{ transform: `translateX(calc(-${internalIndex * 86}% + 7%))`, transition: isSliding ? "transform 500ms cubic-bezier(0.16,1,0.3,1)" : "none" }}>
+              {projects.map((project, idx) => {
+                const active = idx === internalIndex;
+                return (
+                  <div
+                    key={project.id}
+                    className={cn(
+                      "min-w-[86%] h-full px-2 sm:px-3 transition-all duration-500",
+                      !active && "cursor-pointer",
+                    )}
+                    style={{ opacity: active ? 1 : 0.45, transform: active ? "scale(1)" : "scale(0.93)" }}
+                    onClick={() => { if (!active && !isSliding) onNavigate(idx); }}
+                  >
+                    {/* Each slide is its own panel so the dimmed neighbours read
+                        as separate cards peeking in at the edges. object-contain
+                        keeps square/portrait posts and videos fully visible. */}
+                    <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 bg-neutral-900 flex items-center justify-center relative">
+                      {project.video ? (
+                        <video
+                          src={project.video}
+                          poster={project.image || undefined}
+                          className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+                          controls={active}
+                          loop
+                          muted
+                          playsInline
+                          autoPlay={active}
+                        />
+                      ) : (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={project.image || PLACEHOLDER_IMAGE} alt={project.title} className="max-w-full max-h-full w-auto h-auto object-contain select-none"
+                          onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE; }} />
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="px-8 py-7 bg-neutral-900 border-t border-white/5"
