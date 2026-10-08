@@ -56,7 +56,7 @@ export function ProjectsList({ visible = true }: { visible?: boolean }) {
             >
               <span
                 style={{
-                  color: "#ffffff",
+                  color: "var(--page-fg)",
                   opacity: active === null ? 1 : active === i ? 1 : 0.35,
                   transition: "opacity 0.2s ease",
                 }}

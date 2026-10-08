@@ -39,7 +39,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-hidden">
+    <main className="relative min-h-screen w-full bg-[var(--page-bg)] overflow-hidden">
       <div className="grid-bg" />
 
       {entered === true && (

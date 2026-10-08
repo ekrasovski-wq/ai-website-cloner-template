@@ -169,7 +169,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
   const currentStyles = animationPhase === "initial" && !isClosing ? getInitialStyles() : getFinalStyles();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8" onClick={handleClose}
+    <div data-surface="dark" className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8" onClick={handleClose}
       style={{ opacity: isClosing ? 0 : 1, transition: "opacity 500ms cubic-bezier(0.16, 1, 0.3, 1)" }}>
       <div className="absolute inset-0 bg-[#0a0a0a]/90 backdrop-blur-2xl"
         style={{ opacity: animationPhase === "initial" && !isClosing ? 0 : 1, transition: "opacity 600ms cubic-bezier(0.16,1,0.3,1)" }} />
@@ -309,6 +309,7 @@ export const AnimatedFolder: React.FC<AnimatedFolderProps> = ({ title, subtitle,
   return (
     <>
       <div
+        data-surface="dark"
         className={cn("group relative cursor-pointer rounded-[26px] overflow-hidden select-none", className)}
         style={{
           aspectRatio: "1 / 1",

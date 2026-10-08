@@ -186,7 +186,7 @@ export default function ResumePage() {
   useLenis();
 
   return (
-    <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-x-clip">
+    <main className="relative min-h-screen w-full bg-[var(--page-bg)] overflow-x-clip">
       <div className="grid-bg" />
       <TopLogo />
       <MenuButton open={menuOpen} setOpen={setMenuOpen} />

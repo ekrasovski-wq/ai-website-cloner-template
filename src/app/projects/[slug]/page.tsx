@@ -31,7 +31,7 @@ export default function ProjectPage({
 
   if (!project) {
     return (
-      <main className="min-h-screen w-full bg-[#0a0a0a] text-white flex items-center justify-center">
+      <main className="min-h-screen w-full bg-[var(--page-bg)] text-white flex items-center justify-center">
         <p className="text-2xl">Project not found.</p>
       </main>
     );
@@ -49,7 +49,7 @@ export default function ProjectPage({
   });
 
   return (
-    <main className="min-h-screen w-full bg-[#0a0a0a] text-white">
+    <main className="min-h-screen w-full bg-[var(--page-bg)] text-white">
       <div className="grid-bg" />
 
       {/* Back button */}

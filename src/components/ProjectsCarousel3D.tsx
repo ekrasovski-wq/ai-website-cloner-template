@@ -509,13 +509,13 @@ export function ProjectsCarousel3D({
       <div
         className="pointer-events-none fixed inset-x-0 top-0 h-32 z-[2]"
         style={{
-          background: "linear-gradient(to bottom, #0a0a0a 0%, rgba(10,10,10,0.85) 35%, rgba(10,10,10,0) 100%)",
+          background: "linear-gradient(to bottom, var(--page-bg) 0%, color-mix(in srgb, var(--page-bg) 85%, transparent) 35%, transparent 100%)",
         }}
       />
       <div
         className="pointer-events-none fixed inset-x-0 bottom-0 h-40 z-[2]"
         style={{
-          background: "linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.85) 35%, rgba(10,10,10,0) 100%)",
+          background: "linear-gradient(to top, var(--page-bg) 0%, color-mix(in srgb, var(--page-bg) 85%, transparent) 35%, transparent 100%)",
         }}
       />
 

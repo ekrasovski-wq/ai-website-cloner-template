@@ -13,7 +13,7 @@ export default function AboutPage() {
   useLenis();
 
   return (
-    <main className="relative min-h-screen w-full bg-[#0a0a0a] overflow-x-hidden overflow-y-auto sm:overflow-hidden">
+    <main className="relative min-h-screen w-full bg-[var(--page-bg)] overflow-x-hidden overflow-y-auto sm:overflow-hidden">
       <div className="grid-bg" />
       <TopLogo />
       <MenuButton open={menuOpen} setOpen={setMenuOpen} />

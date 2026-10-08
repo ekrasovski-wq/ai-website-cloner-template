@@ -20,7 +20,7 @@ export function EntryOverlay({ onEnter }: { onEnter: () => void }) {
 
   return (
     <div
-      className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-black transition-opacity duration-500 ease-out ${hidden ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+      className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-[var(--page-bg)] transition-opacity duration-500 ease-out ${hidden ? "opacity-0 pointer-events-none" : "opacity-100"}`}
     >
       <div className="mb-2">
         <Mascot3D size={110} />

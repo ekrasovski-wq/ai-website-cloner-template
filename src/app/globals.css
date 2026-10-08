@@ -22,6 +22,18 @@
 :root {
   --grid-margin: 32rem;
   --grid-line: rgba(255, 255, 255, 0.04);
+  /* Theme tokens — dark is the default/main theme. */
+  --page-bg: #0a0a0a;
+  --page-fg: #fafafa;
+  color-scheme: dark;
+}
+
+/* Light theme — opt-in via the toggle (data-theme="light" on <html>). */
+:root[data-theme="light"] {
+  --grid-line: rgba(0, 0, 0, 0.055);
+  --page-bg: #f4f3ef;
+  --page-fg: #1a1a1a;
+  color-scheme: light;
 }
 
 * {
@@ -31,11 +43,12 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: #0a0a0a;
-  color: #fafafa;
+  background: var(--page-bg);
+  color: var(--page-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body {
@@ -72,6 +85,60 @@ html.lenis { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
 .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+/* =====================================================================
+   LIGHT MODE OVERRIDES
+   Everything here is scoped to [data-theme="light"], so the default dark
+   theme is byte-for-byte unchanged. Page content (text/borders/overlays
+   that live on the page background) flips to dark-on-light. Self-contained
+   dark/colored surfaces opt out with data-surface="dark" (the works
+   lightbox and the folder cards), and anything on a solid black chip
+   (menu social icons) keeps its white ink.
+   ===================================================================== */
+:root[data-theme="light"] .text-white      { color: #1a1a1a; }
+:root[data-theme="light"] .text-white\/90  { color: rgba(26,26,26,0.9); }
+:root[data-theme="light"] .text-white\/80  { color: rgba(26,26,26,0.8); }
+:root[data-theme="light"] .text-white\/75  { color: rgba(26,26,26,0.75); }
+:root[data-theme="light"] .text-white\/70  { color: rgba(26,26,26,0.68); }
+:root[data-theme="light"] .text-white\/60  { color: rgba(26,26,26,0.6); }
+:root[data-theme="light"] .text-white\/55  { color: rgba(26,26,26,0.58); }
+:root[data-theme="light"] .text-white\/50  { color: rgba(26,26,26,0.55); }
+:root[data-theme="light"] .text-white\/45  { color: rgba(26,26,26,0.5); }
+:root[data-theme="light"] .text-white\/40  { color: rgba(26,26,26,0.48); }
+:root[data-theme="light"] .text-white\/30  { color: rgba(26,26,26,0.4); }
+
+:root[data-theme="light"] .border-white\/5   { border-color: rgba(0,0,0,0.08); }
+:root[data-theme="light"] .border-white\/10  { border-color: rgba(0,0,0,0.13); }
+:root[data-theme="light"] .border-white\/12  { border-color: rgba(0,0,0,0.15); }
+:root[data-theme="light"] .border-white\/15  { border-color: rgba(0,0,0,0.17); }
+:root[data-theme="light"] .border-white\/25  { border-color: rgba(0,0,0,0.22); }
+
+:root[data-theme="light"] .bg-white\/10        { background-color: rgba(0,0,0,0.06); }
+:root[data-theme="light"] .bg-white\/8         { background-color: rgba(0,0,0,0.05); }
+:root[data-theme="light"] .bg-white\/\[0\.04\] { background-color: rgba(0,0,0,0.04); }
+:root[data-theme="light"] .bg-white\/\[0\.03\] { background-color: rgba(0,0,0,0.035); }
+:root[data-theme="light"] .bg-white\/\[0\.02\] { background-color: rgba(0,0,0,0.03); }
+:root[data-theme="light"] .bg-white\/25        { background-color: rgba(0,0,0,0.1); }
+
+/* Keep white ink on solid black chips (e.g. menu social icons). */
+:root[data-theme="light"] .bg-black .text-white,
+:root[data-theme="light"] .bg-black.text-white { color: #fff; }
+
+/* Opt-out: self-contained dark/colored surfaces keep their original ink. */
+:root[data-theme="light"] [data-surface="dark"] .text-white      { color: #fff; }
+:root[data-theme="light"] [data-surface="dark"] .text-white\/90  { color: rgba(255,255,255,0.9); }
+:root[data-theme="light"] [data-surface="dark"] .text-white\/80  { color: rgba(255,255,255,0.8); }
+:root[data-theme="light"] [data-surface="dark"] .text-white\/70  { color: rgba(255,255,255,0.7); }
+:root[data-theme="light"] [data-surface="dark"] .text-white\/55  { color: rgba(255,255,255,0.55); }
+:root[data-theme="light"] [data-surface="dark"] .text-white\/50  { color: rgba(255,255,255,0.5); }
+:root[data-theme="light"] [data-surface="dark"] .text-white\/40  { color: rgba(255,255,255,0.4); }
+:root[data-theme="light"] [data-surface="dark"] .text-white\/30  { color: rgba(255,255,255,0.3); }
+:root[data-theme="light"] [data-surface="dark"] .border-white\/5  { border-color: rgba(255,255,255,0.05); }
+:root[data-theme="light"] [data-surface="dark"] .border-white\/10 { border-color: rgba(255,255,255,0.1); }
+:root[data-theme="light"] [data-surface="dark"] .border-white\/12 { border-color: rgba(255,255,255,0.12); }
+:root[data-theme="light"] [data-surface="dark"] .bg-white\/10        { background-color: rgba(255,255,255,0.1); }
+:root[data-theme="light"] [data-surface="dark"] .bg-white\/\[0\.03\] { background-color: rgba(255,255,255,0.03); }
+:root[data-theme="light"] [data-surface="dark"] .bg-white\/\[0\.02\] { background-color: rgba(255,255,255,0.02); }
 
 /* marquee infinite */
 @keyframes marquee {
