@@ -8,7 +8,7 @@
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { getProjectBySlug, getNextProject } from "@/lib/projects";
+import { getProjectBySlug, getNextProject, PROJECT_FONTS } from "@/lib/projects";
 import { ProjectPalette } from "@/components/ProjectPalette";
 import { play } from "@/lib/sounds";
 
@@ -102,8 +102,8 @@ export default function ProjectPage({
           />
         </div>
 
-        {/* TEST: auto-extracted colour palette + type specimen */}
-        <ProjectPalette image={project.styleframes[0]} style={fadeUp(2)} />
+        {/* Brand system: auto-extracted colour palette + real typefaces */}
+        <ProjectPalette images={project.styleframes} fonts={PROJECT_FONTS[project.slug]} style={fadeUp(2)} />
 
         {/* Styleframe gallery */}
         <div className="flex flex-col gap-6">

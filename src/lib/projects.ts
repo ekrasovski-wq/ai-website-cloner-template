@@ -177,6 +177,24 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+// Typefaces used in each project (read from the embedded fonts in the source
+// PDFs; Tekhili is Elene's own display face). Shown on the detail page's
+// brand-system block. First entry is the primary/display typeface.
+export const PROJECT_FONTS: Record<string, string[]> = {
+  "mybusiness-brandbook": ["TBC Contractica", "Avenir Next Georgian"],
+  "nolo": ["Custom lettering"],
+  "sabakalavro": ["TBC Contractica"],
+  "veipi": ["TBC Contractica"],
+  "masho": ["High Spirited", "TBC Contractica"],
+  "kompozicia": ["Bebas Neue"],
+  "amore": ["Bebas Neue", "Thelorin"],
+  "vebi-beh": ["TBC Contractica", "Noto Sans Georgian"],
+  "clair-brandbook": ["Avenir", "Myriad Pro"],
+  "caseway-brandbook": ["Poppins", "Lato"],
+  "nizhara-branding": ["TeX Gyre Heros", "TeX Gyre Pagella"],
+  "tekhili-typeface": ["Tekhili", "TBC Contractica"],
+};
+
 // Projects hidden from the home page (spiral + list) but still kept in the
 // dataset so they appear in the Works "Branding" folder and remain reachable
 // on their detail page.
