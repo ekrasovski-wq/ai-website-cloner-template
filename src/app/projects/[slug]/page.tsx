@@ -9,6 +9,7 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getProjectBySlug, getNextProject } from "@/lib/projects";
+import { ProjectPalette } from "@/components/ProjectPalette";
 import { play } from "@/lib/sounds";
 
 export default function ProjectPage({
@@ -100,6 +101,9 @@ export default function ProjectPage({
             className="w-full h-full object-cover"
           />
         </div>
+
+        {/* TEST: auto-extracted colour palette + type specimen */}
+        <ProjectPalette image={project.styleframes[0]} style={fadeUp(2)} />
 
         {/* Styleframe gallery */}
         <div className="flex flex-col gap-6">
